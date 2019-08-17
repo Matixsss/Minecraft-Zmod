@@ -12,12 +12,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import com.DystryktZ.Capability.IZStat;
 import com.DystryktZ.Capability.ZStat;
 import com.DystryktZ.utils.LotteryPack;
+import com.DystryktZ.utils.MyStringBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -34,7 +36,7 @@ public class ZmodJson {
 	private static String path;
 	
 	public static Map<String, BlockInfo> block_map = new HashMap<String, BlockInfo>();
-	public static ArrayList<String> mining_lottery = new ArrayList<String>();
+	public static Set<String> mining_lottery = new HashSet<String>();
 	public static Map<String, Integer> combat_exp_table = new HashMap<String, Integer>();
 	
 	public static int combat_lottery_sum = 0;
@@ -199,7 +201,7 @@ public class ZmodJson {
 		lottery.addProperty("melon_slice",300);
 		lottery.addProperty("carrot",300);
 		lottery.addProperty("potato",300);
-		lottery.addProperty("diamond",1);
+		lottery.addProperty("diamond",5);
 		
 		 try(FileWriter f = new FileWriter(path))
 		 {
@@ -241,10 +243,10 @@ public class ZmodJson {
 		JsonObject bonus = new JsonObject();
 		bonus.addProperty("break_bonus", 0.004F);
 		bonus.addProperty("mining_bonus", 1F);
-		bonus.addProperty("woodcutting_bonus", 2F);
+		bonus.addProperty("woodcutting_bonus", 1F);
 		bonus.addProperty("digging_bonus", 0.2F);
-		bonus.addProperty("combat_bonus", 4F);
-		bonus.addProperty("farming_bonus", 2F);
+		bonus.addProperty("combat_bonus", 1F);
+		bonus.addProperty("farming_bonus", 1F);
 		
 		 try(FileWriter f = new FileWriter(path))
 		 {
@@ -257,10 +259,65 @@ public class ZmodJson {
 		 }
 	}
 	
+	private static void SaveMiningLottery(String path)
+	{
+	    MyStringBuilder ores = new MyStringBuilder();
+		ores.append("coal_ore");
+		ores.append("lapis_ore");
+		ores.append("redstone ore");
+		ores.append("gold_ore");
+		ores.append("diamond_ore");
+		ores.append("emerald_ore");
+		ores.append("iron_ore");
+		ores.append("redstone_ore");
+		ores.append("nether_quartz_ore");
+		
+		 try(FileWriter f = new FileWriter(path))
+		 {
+			f.write(ores.toString());
+			f.flush();
+		 }
+		 catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+	}
+	
+	private static void LoadMiningLottery()
+	{
+		if(!Files.exists(Paths.get(path+"\\MiningLotterySettings.json")))
+    	{
+			SaveMiningLottery(path+"\\MiningLotterySettings.json");
+    	}
+		mining_lottery.clear();
+		
+		StringBuilder ores = new StringBuilder();
+		int i;
+		try (Reader reader = new FileReader(path+"\\MiningLotterySettings.json")) {
+			while((i = reader.read()) != -1)
+			{
+				if((char)i == ';')
+				{
+					mining_lottery.add(ores.toString());
+					System.out.println(ores.toString());
+					ores = new StringBuilder();
+				}
+				else
+				{
+				ores.append((char)i);
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();			
+		}
+	}
+	
 	
 	public static void LoadJson()
 	{
-		setupMiningLottery();
+		LoadMiningLottery();
 		LoadBlockExpSettings();
 		LoadCombatExpSettings();
 		LoadCombatLotterySettings();
@@ -334,7 +391,7 @@ public class ZmodJson {
 	private static void SaveConfigFile(String path)
 	{
 		String[] lines = new String[5];
-		lines[0] = "#dedicated server settings";
+		lines[0] = "#Dedicated server settings"+System.lineSeparator();
 		lines[1] = "#Saving ranking in time intervals(seconds)"+System.lineSeparator();
 		lines[2] = "save-intervals:100"+System.lineSeparator();
 		lines[3] = "#Luck multiply for three best players"+System.lineSeparator();
@@ -352,21 +409,6 @@ public class ZmodJson {
 		 {
 			 ex.printStackTrace();
 		 }
-	}
-	
-	private static void setupMiningLottery()
-	{
-		//default mining lottery
-		mining_lottery.clear();
-		mining_lottery.add("coal_ore");
-		mining_lottery.add("lapis_ore");
-		mining_lottery.add("redstone ore");
-		mining_lottery.add("gold_ore");
-		mining_lottery.add("diamond_ore");
-		mining_lottery.add("emerald_ore");
-		mining_lottery.add("iron_ore");
-		mining_lottery.add("redstone_ore");
-		mining_lottery.add("nether_quartz_ore");
 	}
 	
 	private static void LoadCombatLotterySettings()	
