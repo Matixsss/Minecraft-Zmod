@@ -122,7 +122,11 @@ public class ZEventHandler {
 			mob_name = mob_name.substring(10,mob_name.length());
 		}
 		}
-		//player.sendMessage(new StringTextComponent(mob_name)); //for tests
+		
+		if(ZmodJson.c_show_entity_info.contains(player.getName().getUnformattedComponentText()))
+		{
+		player.sendMessage(new StringTextComponent(mob_name)); //when command is toggle
+		}
 
 	    if(ZmodJson.combat_exp_table.containsKey(mob_name))
 		{
@@ -270,8 +274,11 @@ public class ZEventHandler {
 		if(player.world.isRemote || player.isCreative() || checkSilkTouch(player)) { return; }
 		Block b = event.getState().getBlock();	
 		BlockPos bp = event.getPos();
-		String s = getRegistryName(b);	
-		//player.sendMessage(new StringTextComponent(b.getRegistryName().getPath())); //for test
+		String s = getRegistryName(b);
+		if(ZmodJson.c_show_block_info.contains(player.getName().getUnformattedComponentText()))
+		{
+		player.sendMessage(new StringTextComponent(b.getRegistryName().getPath())); //command toggle
+		}
 		LazyOptional<IZStat> lo = player.getCapability(ZStatController.ZStat_CAP);
 		IZStat zs = lo.orElse(null);
 		if(zs==null) { return; }	

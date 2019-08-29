@@ -1,5 +1,6 @@
 package com.DystryktZ;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,6 +9,8 @@ import com.DystryktZ.Capability.CapabilityHandler;
 import com.DystryktZ.Capability.IZStat;
 import com.DystryktZ.Capability.ZStat;
 import com.DystryktZ.Capability.ZStorage;
+import com.DystryktZ.Commands.ZBlockInfoCommand;
+import com.DystryktZ.Commands.ZEntityInfoCommand;
 import com.DystryktZ.Commands.ZReloadCommand;
 import com.DystryktZ.Commands.ZResetStatsCommand;
 import com.DystryktZ.Network.ZModPacketHandler;
@@ -55,6 +58,8 @@ public class Zmod
 	    {
 	    	ZReloadCommand.register(event.getCommandDispatcher());
 	    	ZResetStatsCommand.register(event.getCommandDispatcher());
+	    	ZBlockInfoCommand.register(event.getCommandDispatcher());
+	    	ZEntityInfoCommand.register(event.getCommandDispatcher());
 	    }
     
    
@@ -63,7 +68,7 @@ public class Zmod
         // do something that can only be done on the client
         //LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
     	try {
-			directory = event.getMinecraftSupplier().get().gameDir.getCanonicalPath()+"\\config\\";
+			directory = event.getMinecraftSupplier().get().gameDir.getCanonicalPath()+File.separator+"config"+File.separator;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +80,7 @@ public class Zmod
     private void onDedicatedServerStarting(FMLDedicatedServerSetupEvent event) {
         // do something when the server starts
         try {
-			directory = event.getServerSupplier().get().getDataDirectory().getCanonicalPath()+"\\config\\";
+			directory = event.getServerSupplier().get().getDataDirectory().getCanonicalPath()+File.separator+"config"+File.separator;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -2,6 +2,7 @@ package com.DystryktZ;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class ZmodJson {
 	
 	private static String path;
 	
+	public static Set<String> c_show_block_info = new HashSet<String>();
+	public static Set<String> c_show_entity_info = new HashSet<String>();
 	public static Map<String, BlockInfo> block_map = new HashMap<String, BlockInfo>();
 	public static Set<String> mining_lottery = new HashSet<String>();
 	public static Map<String, Integer> combat_exp_table = new HashMap<String, Integer>();
@@ -285,21 +288,21 @@ public class ZmodJson {
 	
 	private static void LoadMiningLottery()
 	{
-		if(!Files.exists(Paths.get(path+"\\MiningLotterySettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"MiningLotterySettings.json")))
     	{
-			SaveMiningLottery(path+"\\MiningLotterySettings.json");
+			SaveMiningLottery(path+File.separator+"MiningLotterySettings.json");
     	}
 		mining_lottery.clear();
 		
 		StringBuilder ores = new StringBuilder();
 		int i;
-		try (Reader reader = new FileReader(path+"\\MiningLotterySettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"MiningLotterySettings.json")) {
 			while((i = reader.read()) != -1)
 			{
 				if((char)i == ';')
 				{
 					mining_lottery.add(ores.toString());
-					System.out.println(ores.toString());
+					//System.out.println(ores.toString());
 					ores = new StringBuilder();
 				}
 				else
@@ -329,12 +332,12 @@ public class ZmodJson {
 	
 	private static void LoadConfigFile()
 	{
-		if(!Files.exists(Paths.get(path+"\\Config.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"Config.json")))
     	{
-			SaveConfigFile(path+"\\Config.json");
+			SaveConfigFile(path+File.separator+"Config.json");
     	}
 		
-		 try(BufferedReader f = new BufferedReader(new FileReader(path+"\\Config.json")))
+		 try(BufferedReader f = new BufferedReader(new FileReader(path+File.separator+"Config.json")))
 		 {
 			 String s;
 			 while((s=f.readLine()) != null)
@@ -413,14 +416,14 @@ public class ZmodJson {
 	
 	private static void LoadCombatLotterySettings()	
 	{
-		if(!Files.exists(Paths.get(path+"\\CombatLotterySettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"CombatLotterySettings.json")))
     	{
-			SaveCombatLotteryJson(path+"\\CombatLotterySettings.json"); //create default file
+			SaveCombatLotteryJson(path+File.separator+"CombatLotterySettings.json"); //create default file
     	}
 		combat_lottery.clear();
 		combat_lottery_sum=0;
 		Gson gson = new GsonBuilder().setLenient().create();
-		try (Reader reader = new FileReader(path+"\\CombatLotterySettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"CombatLotterySettings.json")) {
 			JsonObject jo = new JsonObject();
 			jo = gson.fromJson(reader, JsonObject.class);
 			Set<Map.Entry<String, JsonElement>> entrySet = jo.entrySet();
@@ -446,14 +449,14 @@ public class ZmodJson {
 	
 	private static void LoadDiggingLotterySettings()	
 	{
-		if(!Files.exists(Paths.get(path+"\\DiggingLotterySettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"DiggingLotterySettings.json")))
     	{
-			SaveDiggingLotteryJson(path+"\\DiggingLotterySettings.json");
+			SaveDiggingLotteryJson(path+File.separator+"DiggingLotterySettings.json");
     	}
 		digging_lottery.clear();
 		digging_lottery_sum=0;
 		Gson gson = new GsonBuilder().setLenient().create();
-		try (Reader reader = new FileReader(path+"\\DiggingLotterySettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"DiggingLotterySettings.json")) {
 			JsonObject jo = new JsonObject();
 			jo = gson.fromJson(reader, JsonObject.class);
 			Set<Map.Entry<String, JsonElement>> entrySet = jo.entrySet();
@@ -478,13 +481,13 @@ public class ZmodJson {
 	
 	private static void LoadBonusChartsSettings()
 	{
-		if(!Files.exists(Paths.get(path+"\\BonusChartsSettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"BonusChartsSettings.json")))
     	{
-			SaveBonusChartsJson(path+"\\BonusChartsSettings.json");
+			SaveBonusChartsJson(path+File.separator+"BonusChartsSettings.json");
     	}
 		server_configs = new CompoundNBT();
 		Gson gson = new GsonBuilder().setLenient().create();
-		try (Reader reader = new FileReader(path+"\\BonusChartsSettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"BonusChartsSettings.json")) {
 			JsonObject jo = new JsonObject();
 			jo = gson.fromJson(reader, JsonObject.class);
 			Set<Map.Entry<String, JsonElement>> entrySet = jo.entrySet();
@@ -526,14 +529,14 @@ public class ZmodJson {
 	
 	private static void LoadBlockExpSettings()
 	{		
-		if(!Files.exists(Paths.get(path+"\\BlockExpSettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"BlockExpSettings.json")))
     	{
-			SaveBlockExpJson(path+"\\BlockExpSettings.json");
+			SaveBlockExpJson(path+File.separator+"BlockExpSettings.json");
     	}
 		block_map.clear();
 		Gson gson = new GsonBuilder().setLenient().create();
 		int cat=0;
-		try (Reader reader = new FileReader(path+"\\BlockExpSettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"BlockExpSettings.json")) {
 			JsonArray ja = new JsonArray();
 			ja = gson.fromJson(reader, JsonArray.class);
 			for(JsonElement je : ja)
@@ -563,13 +566,13 @@ public class ZmodJson {
 	
 	private static void LoadCombatExpSettings()
 	{		
-		if(!Files.exists(Paths.get(path+"\\CombatExpSettings.json")))
+		if(!Files.exists(Paths.get(path+File.separator+"CombatExpSettings.json")))
     	{
-			SaveCombatExpJson(path+"\\CombatExpSettings.json");
+			SaveCombatExpJson(path+File.separator+"CombatExpSettings.json");
     	}
 		combat_exp_table.clear();
 		Gson gson = new GsonBuilder().setLenient().create();
-		try (Reader reader = new FileReader(path+"\\CombatExpSettings.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"CombatExpSettings.json")) {
 			JsonObject jo = new JsonObject();
 			jo = gson.fromJson(reader, JsonObject.class);
 			Set<Map.Entry<String, JsonElement>> entrySet = jo.entrySet();
@@ -604,7 +607,7 @@ public class ZmodJson {
 		}
 		
  
-		 try(FileWriter f = new FileWriter(path+"\\ServerRanking.json"))
+		 try(FileWriter f = new FileWriter(path+File.separator+"ServerRanking.json"))
 		 {
 			f.write(gson.toJson(j_array));
 			f.flush();
@@ -618,7 +621,7 @@ public class ZmodJson {
 	public static Map<String, IZStat> RankingloadFromJson()
 	{
 		Map<String, IZStat> map = new HashMap<String, IZStat>();
-		Path fp = Paths.get(path+"\\ServerRanking.json");
+		Path fp = Paths.get(path+File.separator+"ServerRanking.json");
 		if(!Files.exists(fp))
     	{
 			try {
@@ -632,7 +635,7 @@ public class ZmodJson {
 		{		
 		Gson gson = new GsonBuilder().setLenient().create();
 		
-		try (Reader reader = new FileReader(path+"\\ServerRanking.json")) {
+		try (Reader reader = new FileReader(path+File.separator+"ServerRanking.json")) {
 			String name;
 			JsonArray ja = new JsonArray();
 			ja = gson.fromJson(reader, JsonArray.class);
