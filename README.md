@@ -19,4 +19,14 @@ Building: no bonuses, just for ranking
 -Ranking shows 5 best players in every class category\
 -Three best players will receive an award in the form of multiplier luck bonus (by default: 1.{1.2} 2.{1.1} 3.{1.05})
 
+commands:
+
+-zreloadconfigs (reload configs files)
+
+-zresetstats "player" (reset specific player skills)
+
+-zblockinfo (useful for getting custom block name)
+
+-zentityinfo (-||- entity name)
+
 default open gui key: g
