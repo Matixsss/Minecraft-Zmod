@@ -121,7 +121,7 @@ public class ZEventHandler {
 		}
 		}
 		
-		if(ZmodJson.c_show_entity_info.contains(player.getName().getUnformattedComponentText()))
+		if(ZmodJson.players_settings.containsKey(player.getName().getString()) && ZmodJson.players_settings.get(player.getName().getString())[2])
 		{
 		player.sendMessage(new StringTextComponent(mob_name)); //when command is toggle
 		}
@@ -179,8 +179,11 @@ public class ZEventHandler {
 			{
 				ItemStack is = new ItemStack(combat_lottery.get(i).getX());
 				is.setCount(bonus);
-				player.world.addEntity(new ItemEntity(player.world, target.posX, target.posY, target.posZ, is));	
-				player.sendMessage(new StringTextComponent("Combat bonus: "+bonus+" "+is.getDisplayName().getUnformattedComponentText()));
+				player.world.addEntity(new ItemEntity(player.world, target.posX, target.posY, target.posZ, is));
+				if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
+				{
+					player.sendMessage(new StringTextComponent("Combat bonus: "+bonus+" "+is.getDisplayName().getUnformattedComponentText()));
+				}				
 				break;
 			}
 			actual_chance += combat_lottery.get(i).getY();
@@ -207,8 +210,11 @@ public class ZEventHandler {
 			{
 				ItemStack is = new ItemStack(digging_lottery.get(i).getX());
 				is.setCount(bonus);
-				player.world.addEntity(new ItemEntity(player.world, bp.getX(), bp.getY(), bp.getZ(), is));	
+				player.world.addEntity(new ItemEntity(player.world, bp.getX(), bp.getY(), bp.getZ(), is));
+				if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
+				{
 				player.sendMessage(new StringTextComponent("Digging bonus: "+bonus+" "+is.getDisplayName().getUnformattedComponentText()));
+				}
 				break;
 			}
 			actual_chance += digging_lottery.get(i).getY();
@@ -277,7 +283,7 @@ public class ZEventHandler {
 		Block b = event.getState().getBlock();	
 		BlockPos bp = event.getPos();
 		String s = getRegistryName(b);
-		if(ZmodJson.c_show_block_info.contains(player.getName().getUnformattedComponentText()))
+		if(ZmodJson.players_settings.containsKey(player.getName().getString()) && ZmodJson.players_settings.get(player.getName().getString())[1])
 		{
 		player.sendMessage(new StringTextComponent(s)); //command toggle
 		}
@@ -304,7 +310,10 @@ public class ZEventHandler {
 						lis.get(0).setCount(bonus);
 							ItemEntity ie = new ItemEntity(player.world, bp.getX(), bp.getY(), bp.getZ(), lis.get(0));
 							player.world.addEntity(ie);	
+							if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
+							{
 							player.sendMessage(new StringTextComponent("Mining bonus: "+bonus+" "+ie.getDisplayName().getUnformattedComponentText()));
+							}
 					}
 				}				
 				}
@@ -328,7 +337,10 @@ public class ZEventHandler {
 						lis.get(0).setCount(bonus);
 							ItemEntity ie = new ItemEntity(player.world, bp.getX(), bp.getY(), bp.getZ(), lis.get(0));
 							player.world.addEntity(ie);
+							if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
+							{
 							player.sendMessage(new StringTextComponent("Woodcutting bonus: "+bonus+" "+ie.getDisplayName().getUnformattedComponentText()));
+							}
 					}
 				}		
 				zs.add_cutting_xp(bi.getXp()); 	//add exp
@@ -383,8 +395,11 @@ public class ZEventHandler {
 					ls.setCount(bonus1);
 					ItemEntity ie = new ItemEntity(player.world, bp.getX(), bp.getY(), bp.getZ(), ls);
 					player.world.addEntity(ie);
-				}						
+				}	
+				if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
+				{
 					player.sendMessage(new StringTextComponent("Farming bonus: crops"));
+				}
 			}
 		}
 		zs.add_farm_xp(bi.getXp()); //add exp

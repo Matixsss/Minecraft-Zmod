@@ -9,10 +9,9 @@ import com.DystryktZ.Capability.CapabilityHandler;
 import com.DystryktZ.Capability.IZStat;
 import com.DystryktZ.Capability.ZStat;
 import com.DystryktZ.Capability.ZStorage;
-import com.DystryktZ.Commands.ZBlockInfoCommand;
-import com.DystryktZ.Commands.ZEntityInfoCommand;
 import com.DystryktZ.Commands.ZReloadCommand;
 import com.DystryktZ.Commands.ZResetStatsCommand;
+import com.DystryktZ.Commands.ZSettingsCommand;
 import com.DystryktZ.Network.ZModPacketHandler;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -58,8 +57,7 @@ public class Zmod
 	    {
 	    	ZReloadCommand.register(event.getCommandDispatcher());
 	    	ZResetStatsCommand.register(event.getCommandDispatcher());
-	    	ZBlockInfoCommand.register(event.getCommandDispatcher());
-	    	ZEntityInfoCommand.register(event.getCommandDispatcher());
+	    	ZSettingsCommand.register(event.getCommandDispatcher());
 	    }
     
    
@@ -74,7 +72,7 @@ public class Zmod
 			e.printStackTrace();
 		}
     	SetupConfig();  	
-    	MinecraftForge.EVENT_BUS.register(new ZEventHandlerClient());
+    	MinecraftForge.EVENT_BUS.register(new ZEventHandlerClient());  	
     }
     
     private void onDedicatedServerStarting(FMLDedicatedServerSetupEvent event) {
@@ -101,7 +99,12 @@ public class Zmod
 			}
     	}
     	ZmodJson.setPath(directory+"ZMod");
-    	ZmodJson.LoadJson();	
+    	ZmodJson.LoadJson();
+    	if(isClient)
+    	{
+    		ZmodJsonClient.setPath(directory+"ZMod");
+    		ZmodJsonClient.loadConfigs();
+    	}
     }
     
     private void setup(final FMLCommonSetupEvent event)

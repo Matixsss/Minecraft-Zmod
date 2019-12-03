@@ -24,8 +24,10 @@ public class ZModPacketHandler {
 		int disc = 0;
 		HANDLER.registerMessage(disc++, ZModCapPacket.class, ZModCapPacket::encode, ZModCapPacket::decode, ZModCapPacket.Handler::handle);
 		HANDLER.registerMessage(disc++, ClientPacket.class, ClientPacket::encode, ClientPacket::decode, ClientPacket.Handler::handle);
+		HANDLER.registerMessage(disc++, ClientPacketSettings.class, ClientPacketSettings::encode, ClientPacketSettings::decode, ClientPacketSettings.Handler::handle);
 		HANDLER.registerMessage(disc++, ServerPacket_Ranking.class, ServerPacket_Ranking::encode, ServerPacket_Ranking::decode, ServerPacket_Ranking.Handler::handle);
 		HANDLER.registerMessage(disc++, ServerPacket_ServerInfo.class, ServerPacket_ServerInfo::encode, ServerPacket_ServerInfo::decode, ServerPacket_ServerInfo.Handler::handle);
+		HANDLER.registerMessage(disc++, ServerPacket_UpdateSettings.class, ServerPacket_UpdateSettings::encode, ServerPacket_UpdateSettings::decode, ServerPacket_UpdateSettings.Handler::handle);
 	}
 	
 	

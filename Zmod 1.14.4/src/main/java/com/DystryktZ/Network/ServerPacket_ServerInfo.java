@@ -3,6 +3,7 @@ package com.DystryktZ.Network;
 import java.util.function.Supplier;
 
 import com.DystryktZ.ZmodJson;
+import com.DystryktZ.ZmodJsonClient;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
@@ -33,7 +34,11 @@ private final CompoundNBT nbt;
 			ctx.get().enqueueWork(() -> {
 				
 				ZmodJson.server_configs = message.nbt;
-			
+				CompoundNBT settings_nbt = new CompoundNBT();
+				settings_nbt.putBoolean("notification", ZmodJsonClient.notification);
+				settings_nbt.putBoolean("blockinfo", ZmodJsonClient.blockinfo);
+				settings_nbt.putBoolean("entityinfo", ZmodJsonClient.entityinfo);
+				ZModPacketHandler.sendToServer(new ClientPacketSettings(settings_nbt));
 				
 			});
 			ctx.get().setPacketHandled(true);

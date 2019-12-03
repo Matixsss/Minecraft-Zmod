@@ -36,8 +36,6 @@ public class ZmodJson {
 	
 	private static String path;
 	
-	public static Set<String> c_show_block_info = new HashSet<String>();
-	public static Set<String> c_show_entity_info = new HashSet<String>();
 	public static Map<String, BlockInfo> block_map = new HashMap<String, BlockInfo>();
 	public static Set<String> mining_lottery = new HashSet<String>();
 	public static Map<String, Integer> combat_exp_table = new HashMap<String, Integer>();
@@ -46,6 +44,7 @@ public class ZmodJson {
 	public static ArrayList<LotteryPack> combat_lottery = new ArrayList<LotteryPack>();
 	public static int digging_lottery_sum = 0;
 	public static ArrayList<LotteryPack> digging_lottery = new ArrayList<LotteryPack>();
+	public static Map<String, boolean[]> players_settings = new HashMap<String, boolean[]>();
 	
 	public static CompoundNBT server_configs;
 	public static double[] RankingBonusSettings = new double[3];
@@ -62,7 +61,7 @@ public class ZmodJson {
 	
 	public static void SaveBlockExpJson(String path)
 	{	 
-		 Gson gson = new Gson();
+		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		 JsonObject mining = new JsonObject();
 		 JsonObject miningDetail = new JsonObject();
 		 miningDetail.addProperty("stone", 1);
@@ -95,7 +94,7 @@ public class ZmodJson {
 		 
 		 JsonObject woodcutting = new JsonObject();
 		 JsonObject woodcuttingDetail = new JsonObject();
-		 woodcuttingDetail.addProperty("wood", 4);
+		 woodcuttingDetail.addProperty("wood", 1);
 		 woodcutting.add("Woodcutting",  woodcuttingDetail);
 		 
 		 JsonObject farming = new JsonObject();
@@ -127,7 +126,7 @@ public class ZmodJson {
 	
 	public static void SaveCombatExpJson(String path)
 	{
-		 Gson gson = new Gson();
+		 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		 JsonObject monster = new JsonObject();
 		 //aggresive
 		 monster.addProperty("skeleton", 10);
@@ -195,7 +194,7 @@ public class ZmodJson {
 	
 	public static void SaveCombatLotteryJson(String path)
 	{
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonObject lottery = new JsonObject();
 		lottery.addProperty("bone",500);
 		lottery.addProperty("arrow",400);
@@ -219,7 +218,7 @@ public class ZmodJson {
 	
 	public static void SaveDiggingLotteryJson(String path)
 	{
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonObject digging = new JsonObject();
 		digging.addProperty("diamond",15);
 		digging.addProperty("gold_ingot",50);
@@ -242,14 +241,14 @@ public class ZmodJson {
 	
 	public static void SaveBonusChartsJson(String path)
 	{
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonObject bonus = new JsonObject();
 		bonus.addProperty("break_bonus", 0.004F);
-		bonus.addProperty("mining_bonus", 1F);
-		bonus.addProperty("woodcutting_bonus", 1F);
+		bonus.addProperty("mining_bonus", 0.5F);
+		bonus.addProperty("woodcutting_bonus", 0.5F);
 		bonus.addProperty("digging_bonus", 0.2F);
-		bonus.addProperty("combat_bonus", 1F);
-		bonus.addProperty("farming_bonus", 1F);
+		bonus.addProperty("combat_bonus", 0.5F);
+		bonus.addProperty("farming_bonus", 0.5F);
 		
 		 try(FileWriter f = new FileWriter(path))
 		 {
@@ -589,7 +588,7 @@ public class ZmodJson {
 	
 	public static void saveServerRanking(Map<String, IZStat> map)
 	{
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonArray j_array = new JsonArray(); //lista graczy
 		Set<Map.Entry<String, IZStat>> map_entry = map.entrySet();
 		for(Map.Entry<String, IZStat> entry : map_entry)
@@ -678,7 +677,7 @@ public class ZmodJson {
 							}
 						}
 						
-						map.put(name, zs);			
+						map.put(name, zs);	
 				}
 				
 			}
