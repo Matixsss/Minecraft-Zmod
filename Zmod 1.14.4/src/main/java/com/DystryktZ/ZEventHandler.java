@@ -163,7 +163,7 @@ public class ZEventHandler {
 	private void KillLotteryBonus(double chance, PlayerEntity player, Entity target)
 	{
 		int bonus = (int) Math.floor((chance/100.0));
-		double losu = r.nextDouble()*100.0+0.001;
+		double losu = r.nextDouble()*100.0;
 		if(chance-(100*bonus) >= losu)
 		{
 			bonus++;
@@ -193,7 +193,7 @@ public class ZEventHandler {
 	private void DiggingLotteryBonus(double chance, PlayerEntity player, BlockPos bp)
 	{
 		int bonus = (int) Math.floor((chance/100.0));
-		double losu = r.nextDouble()*100.0+0.001;
+		double losu = r.nextDouble()*100.0;
 		//player.sendMessage(new StringTextComponent("chance:"+String.format("%.4f", chance)+" losu:"+String.format("%.4f",losu)+" bonus:" + bonus)); //test
 		if(chance-(100*bonus) >= losu)
 		{
@@ -416,7 +416,7 @@ public class ZEventHandler {
 	private int LotteryBonus(double chance)
 	{	
 		int bonus = (int) Math.floor((chance/100.0));
-		double losu = r.nextDouble()*100.0 + 0.001; //0.001~100
+		double losu = r.nextDouble()*100.0;
 		if(chance-(bonus*100) >= losu)
 		{
 			bonus+=1;
