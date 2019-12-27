@@ -25,8 +25,10 @@ commands:
 
 -zresetstats "player" (reset specific player skills)
 
--zblockinfo (useful for getting custom block name)
+-zsettings X
 
--zentityinfo (-||- entity name)
+*zblockinfo (useful for getting custom block name)
 
-default open gui key: g
+*zentityinfo (-||- entity name)
+
+*notification (option to turn off notification)
