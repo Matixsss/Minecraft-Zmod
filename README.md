@@ -1,5 +1,5 @@
 # Minecraft-Zmod
-Zmod - New skills system, is a modification designed for minecraft 1.14.\
+Zmod - New skills system, is a modification designed for minecraft 1.14. (updated to 1.15.2)\
 This modification will enable you to leveling your character in the style of games from the elder scrolls series.
 
 \#Basic informations\

@@ -132,7 +132,7 @@ public class ZEventHandler {
 		if(zs==null) { return; }
 	    if(ZmodJson.combat_exp_table.containsKey(mob_name))
 		{
-	    KillLotteryBonus(ZmodJson.expToLevel(zs.get_combat_xp())*ZmodJson.server_configs.getDouble("combat_bonus")*getPlayerRankingBonus(player, 2), (PlayerEntity) event.getSource().getTrueSource(), event.getEntityLiving());	
+	    KillLotteryBonus(ZmodJson.expToLevel(zs.get_combat_xp())*ZmodJson.server_configs.getDouble("combat_bonus")*getPlayerRankingBonus(player, 2), player, event.getEntityLiving());	
 		zs.add_combat_xp(ZmodJson.combat_exp_table.get(mob_name));
 		zs.Sync((ServerPlayerEntity) player);
 		UpdateRanking((ServerPlayerEntity)player, zs);
@@ -179,7 +179,7 @@ public class ZEventHandler {
 			{
 				ItemStack is = new ItemStack(combat_lottery.get(i).getX());
 				is.setCount(bonus);
-				player.world.addEntity(new ItemEntity(player.world, target.serverPosX, target.serverPosY, target.serverPosZ, is));
+				player.world.addEntity(new ItemEntity(player.world, target.prevPosX, target.prevPosY, target.prevPosZ, is));
 				if(ZmodJson.players_settings.containsKey(player.getDisplayName().getString()) && ZmodJson.players_settings.get(player.getDisplayName().getString())[0] == true)
 				{
 					player.sendMessage(new StringTextComponent("Combat bonus: "+bonus+" "+is.getDisplayName().getUnformattedComponentText()));
